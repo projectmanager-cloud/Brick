@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brick – ¿Cuál es tu mayor reto al invertir?</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0A;
+    --black-2: #141414;
+    --black-3: #1C1C1C;
+    --white: #F5F3EF;
+    --gold: #9B5E28;
+    --gold-light: #B8722E;
+    --muted: #5E5E5E;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  html, body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.96);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    display: flex; align-items: center; gap: 2px;
+    text-decoration: none;
+  }
+
+  .nav-logo .bar {
+    display: inline-block;
+    width: 3px; height: 18px;
+    background: var(--gold);
+    margin: 0 1px;
+    transform: translateY(1px);
+  }
+
+  .nav-links {
+    display: flex; gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* HERO GRID */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 65px);
+  }
+
+  /* LEFT */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px 56px 72px 48px;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(52px, 5.5vw, 82px);
+    line-height: 0.93;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 28px;
+  }
+
+  h1 .accent { color: var(--gold-light); }
+
+  .description {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #7a7a7a;
+    max-width: 400px;
+    margin-bottom: 44px;
+    font-weight: 300;
+  }
+
+  /* EBOOK CARD */
+  .ebook-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: var(--black-3);
+    border: 0.5px solid var(--border);
+    border-left: 2px solid var(--gold);
+    padding: 18px 22px;
+    border-radius: 3px;
+  }
+
+  .ebook-thumb {
+    width: 54px; height: 70px;
+    background: #0e0e0e;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6px 5px 0;
+  }
+
+  .ebook-thumb-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 7.5px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  .ebook-thumb-sub {
+    font-size: 5px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+  }
+
+  .ebook-thumb-bar {
+    background: var(--gold);
+    text-align: center;
+    padding: 3px 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 5.5px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 -5px;
+  }
+
+  .ebook-info p:first-child {
+    font-size: 10px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .ebook-info p:nth-child(2) {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+  }
+
+  .ebook-info p:last-child {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* RIGHT = FORM */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px 48px 72px 56px;
+    background: var(--black-2);
+  }
+
+  .form-eyebrow {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .question {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 22px;
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+  }
+
+  textarea {
+    width: 100%;
+    background: var(--black-3);
+    border: 0.5px solid var(--border);
+    border-radius: 3px;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    padding: 16px 18px;
+    resize: none;
+    height: 118px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 14px;
+  }
+
+  textarea::placeholder { color: #2e2e2e; }
+  textarea:focus { border-color: rgba(155,94,40,0.5); }
+
+  .fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .field input {
+    width: 100%;
+    background: var(--black-3);
+    border: 0.5px solid var(--border);
+    border-radius: 3px;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 13px 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .field input::placeholder { color: #2e2e2e; }
+  .field input:focus { border-color: rgba(155,94,40,0.5); }
+
+  .cta-btn {
+    width: 100%;
+    padding: 17px;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+
+  .cta-btn:hover { background: var(--gold-light); }
+  .cta-btn:active { transform: scale(0.99); }
+  .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .privacy-note {
+    text-align: center;
+    font-size: 11px;
+    color: #282828;
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .field-error { border-color: rgba(200,55,55,0.55) !important; }
+
+  /* SUCCESS */
+  .success-screen {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 72px 48px;
+    background: var(--black-2);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .success-icon {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: rgba(155,94,40,0.1);
+    border: 1px solid rgba(155,94,40,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin-bottom: 26px;
+    color: var(--gold-light);
+  }
+
+  .success-screen h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 38px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 14px;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+  }
+
+  .success-name { color: var(--gold-light); }
+
+  .success-screen p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.75;
+    max-width: 310px;
+    margin: 0 auto 32px;
+    font-weight: 300;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .download-btn:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer span {
+    font-size: 12px;
+    color: #222;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 17px;
+    color: #222;
+    display: flex; align-items: center; gap: 2px;
+  }
+
+  .footer-logo .bar {
+    display: inline-block;
+    width: 2px; height: 11px;
+    background: var(--gold);
+    margin: 0 1px;
+    transform: translateY(1px);
+    opacity: 0.4;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left {
+      padding: 44px 20px 36px;
+      border-right: none;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .hero-right, .success-screen { padding: 36px 20px 52px; }
+    .fields-row { grid-template-columns: 1fr; }
+    footer { padding: 16px 20px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">BR<span class="bar"></span>CK</a>
+  <ul class="nav-links">
+    <li><a href="#">Proyectos</a></li>
+    <li><a href="#">Fracciones</a></li>
+    <li><a href="#">Brick</a></li>
+    <li><a href="#">Academy</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+
+  <!-- IZQUIERDA -->
+  <div class="hero-left">
+    <div class="eyebrow">Exclusivo para inversionistas</div>
+
+    <h1>Invierte<br>en bienes<br><span class="accent">raíces</span><br>con estrategia</h1>
+
+    <p class="description">
+      Tu opinión es fundamental para nosotros. Comparte el principal reto que enfrentas al momento de invertir y desarrollaremos soluciones y estrategias alineadas con tus necesidades.
+    </p>
+
+    <div class="ebook-card">
+      <div class="ebook-thumb">
+        <div>
+          <div class="ebook-thumb-title">Guía de<br>Inversión</div>
+          <div class="ebook-thumb-sub">Real Estate</div>
+        </div>
+        <div class="ebook-thumb-bar">BRICK</div>
+      </div>
+      <div class="ebook-info">
+        <p>🎁 Regalo gratuito para ti</p>
+        <p>Guía de Inversión<br>Real Estate</p>
+        <p>Por Karolina Ochoa · 14 páginas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DERECHA: FORMULARIO -->
+  <div id="form-panel" class="hero-right">
+    <div class="form-eyebrow">Tu opinión nos importa</div>
+    <div class="question">¿Cuál es tu mayor reto<br>a la hora de invertir?</div>
+
+    <textarea
+      id="reto"
+      placeholder="Ej: No sé cómo diversificar mi portafolio, me preocupa perder capital, no entiendo bien los riesgos del mercado..."
+    ></textarea>
+
+    <div class="fields-row">
+      <div class="field">
+        <label>Nombre</label>
+        <input type="text" id="nombre" placeholder="Tu nombre completo">
+      </div>
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="tu@correo.com">
+      </div>
+    </div>
+
+    <button class="cta-btn" id="submit-btn" onclick="handleSubmit()">
+      Recibir mi guía gratuita
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <p class="privacy-note">🔒 Tus datos son confidenciales. No los compartimos con terceros.</p>
+  </div>
+
+  <!-- DERECHA: PANTALLA DE ÉXITO -->
+  <div id="success-panel" class="success-screen">
+    <div class="success-icon">✓</div>
+    <h2>¡Gracias,<br><span class="success-name" id="user-first-name">inversionista</span>!</h2>
+    <p>
+      Recibimos tu respuesta. Tu guía de inversión está lista para descargar. Muy pronto nuestro equipo se pondrá en contacto contigo.
+    </p>
+    <a
+      href="https://drive.google.com/drive/folders/1AVj72kLYKlSLRuvCz0qMo8insM2Nhfax?usp=sharing"
+      class="download-btn"
+      target="_blank"
+      rel="noopener"
+    >
+      ↓ &nbsp;Descargar Guía de Inversión
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Brick Capital · Todos los derechos reservados</span>
+  <div class="footer-logo">BR<span class="bar"></span>CK</div>
+</footer>
+
+<script>
+  function handleSubmit() {
+    const retoEl   = document.getElementById('reto');
+    const nombreEl = document.getElementById('nombre');
+    const emailEl  = document.getElementById('email');
+    const btn      = document.getElementById('submit-btn');
+
+    // Limpiar errores previos
+    [retoEl, nombreEl, emailEl].forEach(el => el.classList.remove('field-error'));
+
+    // Validación
+    if (!retoEl.value.trim()) {
+      retoEl.classList.add('field-error');
+      retoEl.focus();
+      return;
+    }
+    if (!nombreEl.value.trim()) {
+      nombreEl.classList.add('field-error');
+      nombreEl.focus();
+      return;
+    }
+    if (!emailEl.value.trim() || !emailEl.value.includes('@')) {
+      emailEl.classList.add('field-error');
+      emailEl.focus();
+      return;
+    }
+
+    // Estado de carga
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSdhdAeg4mYgnw4ggSgPe5OGqWMVbQjI9JTLCgu3qSQ8dtQp2w/formResponse';
+    const params = new URLSearchParams();
+    params.append('entry.127336274', nombreEl.value.trim());
+    params.append('entry.903434866',  emailEl.value.trim());
+    params.append('entry.775983755', retoEl.value.trim());
+    new Image().src = FORM_ACTION + '?' + params.toString();
+
+    setTimeout(() => {
+      const firstName = nombreEl.value.trim().split(' ')[0];
+      document.getElementById('user-first-name').textContent = firstName;
+      document.getElementById('form-panel').style.display = 'none';
+      document.getElementById('success-panel').style.display = 'flex';
+    }, 800);
+  }
+
+  // Limpiar error al escribir
+  ['reto', 'nombre', 'email'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+      this.classList.remove('field-error');
+    });
+  });
+</script>
+
+</body>
+</html>
