@@ -566,19 +566,21 @@
     btn.textContent = 'Enviando...';
     btn.disabled = true;
 
-    const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSdhdAeg4mYgnw4ggSgPe5OGqWMVbQjI9JTLCgu3qSQ8dtQp2w/formResponse';
-    const params = new URLSearchParams();
-    params.append('entry.127336274', nombreEl.value.trim());
-    params.append('entry.903434866',  emailEl.value.trim());
-    params.append('entry.775983755', retoEl.value.trim());
-    new Image().src = FORM_ACTION + '?' + params.toString();
-
-    setTimeout(() => {
+    fetch('https://script.google.com/macros/s/AKfycbyAOwUVhnJ0pM8rsKQoMrXAIuar6h-q-WFHl4Qz3-TiRcsIUSBgtWdS9ZDRaahx86lmUw/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: nombreEl.value.trim(),
+        correo: emailEl.value.trim(),
+        reto: retoEl.value.trim()
+      })
+    }).finally(() => {
       const firstName = nombreEl.value.trim().split(' ')[0];
       document.getElementById('user-first-name').textContent = firstName;
       document.getElementById('form-panel').style.display = 'none';
       document.getElementById('success-panel').style.display = 'flex';
-    }, 800);
+    });
   }
 
   // Limpiar error al escribir
